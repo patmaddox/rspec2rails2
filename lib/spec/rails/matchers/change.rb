@@ -1,5 +1,5 @@
 if defined?(ActiveRecord::Base)
-  module Spec
+  module RSpec
     module Matchers
       class Change
         def evaluate_value_proc_with_ensured_evaluation_of_proxy

@@ -6,7 +6,7 @@ $:.unshift(File.expand_path(File.join(File.dirname(__FILE__),"..","rspec","lib")
 $:.unshift(File.expand_path(File.join(File.dirname(__FILE__),"lib")))
 
 require 'spec/rails/version'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
 
 Hoe.spec 'rspec-rails' do

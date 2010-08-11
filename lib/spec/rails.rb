@@ -10,7 +10,7 @@ require 'action_controller/integration'
 require 'active_support/test_case'
 require 'active_record/fixtures' if defined?(ActiveRecord::Base)
 
-require 'spec/test/unit'
+# require 'spec/test/unit'
 
 require 'spec/rails/matchers'
 require 'spec/rails/mocks'

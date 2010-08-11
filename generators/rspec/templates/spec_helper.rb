@@ -2,7 +2,7 @@
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
-require 'spec/autorun'
+require 'rspec/autorun'
 require 'spec/rails'
 
 # Uncomment the next line to use webrat's matchers
