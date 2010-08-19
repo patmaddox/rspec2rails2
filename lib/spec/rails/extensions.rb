@@ -1,4 +1,4 @@
-require 'spec'
+require 'rspec'
 
 require 'spec/rails/extensions/spec/runner/configuration'
 require 'spec/rails/extensions/spec/matchers/have'

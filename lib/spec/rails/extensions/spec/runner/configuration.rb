@@ -1,9 +1,9 @@
-require 'spec/runner/configuration'
+require 'rspec/core/configuration'
 require 'test_help'
 
 if defined?(ActiveRecord::Base)
-  module Spec
-    module Runner
+  module RSpec
+    module Core
       class Configuration
       
         def initialize

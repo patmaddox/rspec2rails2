@@ -1,6 +1,6 @@
-require 'spec/matchers/have'
+require 'rspec/matchers/have'
 
-module Spec #:nodoc:
+module RSpec #:nodoc:
   module Matchers #:nodoc:
     class Have #:nodoc:
 
