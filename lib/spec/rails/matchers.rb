@@ -18,6 +18,9 @@ module Spec
     #
     # For more info on <tt>assert_select</tt>, see the relevant Rails documentation.
     module Matchers
+      if RSpec.respond_to?(:configure)
+        RSpec.configure {|c| c.include self }
+      end
     end
   end
 end
