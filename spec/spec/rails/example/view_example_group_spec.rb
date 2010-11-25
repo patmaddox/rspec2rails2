@@ -95,7 +95,7 @@ describe "A template that includes a partial", :type => :view do
     render!
     begin
       template.verify_rendered
-    rescue Spec::Mocks::MockExpectationError => e
+    rescue RSpec::Mocks::MockExpectationError => e
     ensure
       e.backtrace.find{|line| line =~ /#{__FILE__}\:#{__LINE__ - 6}/}.should_not be_nil
     end
@@ -112,7 +112,7 @@ describe "A template that includes a partial", :type => :view do
     render!
     begin
       template.verify_rendered
-    rescue Spec::Mocks::MockExpectationError => e
+    rescue RSpec::Mocks::MockExpectationError => e
     ensure
       e.backtrace.find{|line| line =~ /#{__FILE__}\:#{__LINE__ - 6}/}.should_not be_nil
     end
@@ -121,7 +121,7 @@ describe "A template that includes a partial", :type => :view do
   it "should fail should_receive(:render) with the right partial but wrong options" do
     template.should_receive(:render).with(:partial => 'partial', :locals => {:thing => Object.new})
     render!
-    lambda {template.verify_rendered}.should raise_error(Spec::Mocks::MockExpectationError)
+    lambda {template.verify_rendered}.should raise_error(RSpec::Mocks::MockExpectationError)
   end
 end
 

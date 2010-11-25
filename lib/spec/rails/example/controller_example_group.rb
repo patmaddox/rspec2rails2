@@ -1,6 +1,50 @@
 module Spec
   module Rails
     module Example
+      module ControllerExampleGroup
+        include Spec::Rails::Interop::ActiveSupport::TestCase
+        include Spec::Rails::Example::FunctionalExampleGroup
+        include Spec::Rails::Interop::ActionController::TestCase
+        extend Spec::Rails::ModuleInclusion
+
+        # taken from ActionController::TestCase
+        def self.included(base)
+          base.class_eval do
+            extend Spec::Rails::Example::ControllerExampleGroup::ClassMethods
+            metadata[:type] = :controller
+            
+            before do
+              ActionController::Base.allow_forgery_protection = false
+
+              # Some Rails apps explicitly disable ActionMailer in environment.rb
+              if defined?(ActionMailer)
+                @deliveries = []
+                ActionMailer::Base.deliveries = @deliveries
+              end
+              
+              setup_controller_request_and_response
+
+              unless @controller.class.ancestors.include?(ActionController::Base)
+                RSpec::Expectations.fail_with <<-MESSAGE
+    Controller specs need to know what controller is being specified. You can
+    indicate this by passing the controller to describe():
+
+      describe MyController do
+
+    or by declaring the controller's name
+
+      describe "a MyController" do
+        controller_name :my #invokes the MyController
+    end
+    MESSAGE
+              end
+              @controller.extend ControllerInstanceMethods
+              @controller.integrate_views! if integrate_views?
+              @controller.session = session              
+            end
+          end
+        end
+
       # Controller Examples live in $RAILS_ROOT/spec/controllers/.
       #
       # Controller Examples use Spec::Rails::Example::ControllerExampleGroup,
@@ -41,8 +85,7 @@ module Spec
       # Rspec on Rails will raise errors that occur in controller actions and
       # are not rescued or handeled with rescue_from.
       #
-      class ControllerExampleGroup < FunctionalExampleGroup
-        class << self
+        module ClassMethods
 
           # Use integrate_views to instruct RSpec to render views in
           # your controller examples in Integration mode.
@@ -92,32 +135,6 @@ module Spec
           def controller_name(name)
             tests "#{name}_controller".camelize.constantize
           end
-        end
-
-        before(:each) do
-          # Some Rails apps explicitly disable ActionMailer in environment.rb
-          if defined?(ActionMailer)
-            @deliveries = []
-            ActionMailer::Base.deliveries = @deliveries
-          end
-
-          unless @controller.class.ancestors.include?(ActionController::Base)
-            Spec::Expectations.fail_with <<-MESSAGE
-Controller specs need to know what controller is being specified. You can
-indicate this by passing the controller to describe():
-
-  describe MyController do
-
-or by declaring the controller's name
-
-  describe "a MyController" do
-    controller_name :my #invokes the MyController
-end
-MESSAGE
-          end
-          @controller.extend ControllerInstanceMethods
-          @controller.integrate_views! if integrate_views?
-          @controller.session = session
         end
 
         attr_reader :response, :request, :controller
@@ -277,7 +294,7 @@ MESSAGE
 
         end
 
-        Spec::Example::ExampleGroupFactory.register(:controller, self)
+        RSpec.configure &include_self_when_dir_matches('spec','controllers')
 
       end
     end

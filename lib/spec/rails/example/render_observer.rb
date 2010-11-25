@@ -71,7 +71,7 @@ module Spec
         end
   
         def render_proxy #:nodoc:
-          @render_proxy ||= Spec::Mocks::Mock.new("render_proxy")
+          @render_proxy ||= RSpec::Mocks::Mock.new("render_proxy")
         end
   
       end

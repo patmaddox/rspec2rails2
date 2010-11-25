@@ -773,7 +773,7 @@ describe 'selecting in HTML that contains a mock with null_object' do
   
   describe 'modified HTML::Document' do
     it 'should raise error on valid HTML even though false is specified' do
-      lambda {HTML::Document.new("<b>#<Spec::Mocks::Mock:0x267b4f0></b>", false, false)}.should raise_error
+      lambda {HTML::Document.new("<b>#<RSpec::Mocks::Mock:0x267b4f0></b>", false, false)}.should raise_error
     end
   end
     

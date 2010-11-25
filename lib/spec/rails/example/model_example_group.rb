@@ -6,12 +6,11 @@ module Spec
         include Spec::Rails::Interop::ActiveSupport::TestCase
         extend Spec::Rails::ModuleInclusion
         
-        included do
-          metadata[:type] = :model
+        def self.included(base)
+          base.class_eval { metadata[:type] = :model }
         end
-        
+
         RSpec.configure &include_self_when_dir_matches('spec','models')
-        
         
         # copied and pasted from rails ActiveRecord::TestCase
         def assert_date_from_db(expected, actual, message = nil)

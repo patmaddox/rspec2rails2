@@ -1,4 +1,4 @@
-# copied and pasted from rails3 ActiveSupport::TestCase
+# copied and pasted from rails2 ActiveSupport::TestCase
 
 require 'test/unit/testcase'
 require 'active_support/testing/setup_and_teardown'

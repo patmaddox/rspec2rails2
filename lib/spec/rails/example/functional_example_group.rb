@@ -1,9 +1,12 @@
-require 'action_controller/test_case'
-
 module Spec
   module Rails
     module Example
-      class FunctionalExampleGroup < ActionController::TestCase
+      module FunctionalExampleGroup
+        include Spec::Rails::Interop::ActiveSupport::TestCase
+        
+        extend Spec::Rails::ModuleInclusion
+        include ::ActionController::TestProcess
+        
         def setup
           # no-op to override AC::TC's setup w/ conflicts with the before(:each) below
         end

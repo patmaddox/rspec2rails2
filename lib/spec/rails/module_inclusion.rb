@@ -8,15 +8,6 @@ module Spec
           }
         end
       end
-      
-      # taken from rails3 ActiveSupport::Concern
-      def included(base = nil, &block)
-        if base.nil?
-          @_included_block = block
-        else
-          super
-        end
-      end
     end
   end
 end
